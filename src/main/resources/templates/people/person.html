@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My profile</title>
+</head>
+<body>
+
+<span>Имя пользователя: </span><span th:text="${person.getUsername()}"></span>
+<br/>
+<span>Год рождения: </span><span th:text="${person.getYearOfBirth()}"></span>
+<br/>
+<span>Роль: </span><span th:text="${person.getRoleText()}"></span>
+
+<hr>
+
+<form th:method="GET" th:action="@{/people}">
+    <input type="submit" value="Назад">
+</form>
+
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}" th:object="${person}">
+    <input type="submit" value="Редактировать">
+</form>
+
+<form th:method="DELETE" th:action="@{/people/{id}/(id=${person.getId()})}" th:object="${person}">
+    <input type="submit" value="Удалить аккаунт">
+</form>
+
+</body>
+</html>

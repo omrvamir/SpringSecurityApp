@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person</title>
+</head>
+<body>
+
+<span>ID пользователя: </span><span th:text="${person.getId()}"></span>
+<br/>
+<span>Роль пользователя: </span><span th:text="${person.getRoleText()}"></span>
+<br/>
+<span>Имя пользователя: </span><span th:text="${person.getUsername()}"></span>
+<br/>
+<span>Год рождения пользователя: </span><span th:text="${person.getYearOfBirth()}"></span>
+<br/>
+
+<form th:method="GET" th:action="@{/admin/people}">
+    <input type="submit" value="Назад">
+</form>
+
+<form th:method="GET" th:action="@{/admin/people/{id}/edit(id=${person.getId()})}" th:object="${person}">
+    <input type="submit" value="Редактировать пользователя">
+</form>
+
+<div th:if="${person.getRole().equals('ROLE_ADMIN')}" >
+    <form th:method="PATCH" th:action="@{/admin/people/{id}/demoteAdmin(id=${person.getId()})}" th:object="${person}">
+        <input type="submit" value="Снять с поста администратора">
+    </form>
+</div>
+
+<div th:if="${person.getRole().equals('ROLE_USER')}">
+    <form th:method="PATCH" th:action="@{/admin/people/{id}/appointAdmin(id=${person.getId()})}" th:object="${person}">
+        <input type="submit" value="Назначить администратором">
+    </form>
+</div>
+
+</body>
+</html>
